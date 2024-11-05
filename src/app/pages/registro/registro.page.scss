@@ -1,0 +1,17 @@
+.d-flex-center {
+    display: flex;
+    justify-content: center; // Centra horizontalmente
+    align-items: flex-start; // Alinea el contenido en la parte superior
+    height: 100vh; // Hace que el contenedor ocupe el 100% de la altura de la pantalla
+    padding-top: 60px; // Añade un poco de espacio en la parte superior
+    
+  }
+.validators{
+    text-align: center;
+    color: red;
+}
+.submit {
+    padding-top: 30px ;
+    width: 150px; // Ajusta el ancho como prefieras
+    margin: 0 auto; // Centra el botón horizontalmente
+}
