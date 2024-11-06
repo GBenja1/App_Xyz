@@ -1,13 +1,12 @@
-
 <ion-content >
-  <ion-toolbar style="position: fixed;">
-
-    <ion-title>Inicio de sesion</ion-title>
-    
-    <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
-
-  </ion-toolbar>
-
+  <ion-header>
+    <ion-toolbar style="position: fixed;">
+      <ion-title>Inicio de sesion</ion-title>
+      <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+  
+  
   <div class="d-flex-center">
     <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()" >
       
