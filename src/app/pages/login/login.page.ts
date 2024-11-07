@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
         console.log(error);
 
         this.utilsSvc.presentToast({
-          message: 'Error... contraseña o correo no existe.',
+          message: 'Error... contraseña o correo invalido.',
           duration: 2500,
           color: 'primary',
           position: 'middle',

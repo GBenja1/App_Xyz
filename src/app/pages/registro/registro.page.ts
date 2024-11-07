@@ -12,6 +12,7 @@ import { UtilsService } from 'src/app/servicios/utils.service';
 export class RegistroPage implements OnInit {
 
   form = new FormGroup({
+    id: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     name: new FormControl('', [Validators.required, Validators.minLength(3)])
@@ -31,7 +32,12 @@ export class RegistroPage implements OnInit {
       this.firebaseSvc.singUp(this.form.value as User).then( async res => {
         await this.firebaseSvc.updateUser(this.form.value.name)
 
-        console.log(res);
+        let id = res.user.displayName;
+        this.form.controls.id.setValue(id);
+
+        this.setUserInfo(id);
+
+        
         this.utilsSvc.presentToast({
           message: 'Registro exitoso!',
           duration: 2500,
@@ -45,6 +51,40 @@ export class RegistroPage implements OnInit {
 
         this.utilsSvc.presentToast({
           message: 'Error... contraseña o correo no existe.',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          animated: true,
+          icon: 'alert-circle-outline'
+        })
+
+      }).finally(() => {
+        loading.dismiss();
+      })
+    }
+  }
+
+
+  async setUserInfo(id: string) {
+    if (this.form.valid) {
+
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      let path = `users/${id}`;
+      delete this.form.value.password;
+      
+      this.firebaseSvc.setDocument(path , this.form.value).then( async res => {
+
+        this.utilsSvc.saveInLocalStorage('user', this.form.value);
+        this.utilsSvc.routerLink('/home');
+        this.form.reset();
+        
+      }).catch(error => {
+        console.log(error);
+
+        this.utilsSvc.presentToast({
+          message: error.message,
           duration: 2500,
           color: 'primary',
           position: 'middle',
