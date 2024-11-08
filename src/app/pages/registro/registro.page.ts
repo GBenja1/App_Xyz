@@ -32,7 +32,7 @@ export class RegistroPage implements OnInit {
       this.firebaseSvc.singUp(this.form.value as User).then( async res => {
         await this.firebaseSvc.updateUser(this.form.value.name)
 
-        let id = res.user.displayName;
+        let id = res.user.uid;
         this.form.controls.id.setValue(id);
 
         this.setUserInfo(id);
