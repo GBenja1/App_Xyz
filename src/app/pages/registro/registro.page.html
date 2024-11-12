@@ -1,14 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-    <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Registro</ion-title>
+      <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
   <div class="d-flex-center">
     <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
-
+      
       <!-- nombre -->
       <app-custom-input
         autocomplete="name"
@@ -20,8 +21,9 @@
 
       <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
         <div *ngIf="form.controls.name.errors?.['required']">Debe ingresar un nombre</div>
-        <div *ngIf="form.controls.name.errors?.['minlength']">Debe tener 3 caracteres minimo</div>
+        <div *ngIf="form.controls.name.errors?.['minlength']">Debe tener 3 caracteres mínimo</div>
       </div>
+
       <!-- correo -->
       <app-custom-input
         autocomplete="email"
@@ -33,10 +35,10 @@
 
       <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
         <div *ngIf="form.controls.email.errors?.['required']">Debe ingresar un correo</div>
-        <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo valido</div>
+        <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
       </div>
 
-      <!-- constraseña -->
+      <!-- contraseña -->
       <app-custom-input
         [control]="form.controls.password"
         icon="lock-closed-outline"
@@ -49,7 +51,14 @@
         <div *ngIf="form.controls.password.errors?.['minlength']">Debe ingresar al menos 6 caracteres</div>
       </div>
 
-      
+      <!-- rol -->
+      <ion-item>
+        <ion-label>Rol</ion-label>
+        <ion-select formControlName="role">
+          <ion-select-option value="usuario">Usuario</ion-select-option>
+          <ion-select-option value="admin">Admin</ion-select-option>
+        </ion-select>
+      </ion-item>
 
       <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid">
         Registrar
@@ -59,3 +68,4 @@
     </form>
   </div>
 </ion-content>
+

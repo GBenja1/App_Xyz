@@ -4,15 +4,19 @@
   
   <ion-header>
     <ion-toolbar style="position: fixed;">
-      <ion-title>Inicio de sesion</ion-title>
+      <ion-icon slot="start" name="arrow-back" [routerLink]="['/login']" style="padding-left: 20px; font-size: large;"></ion-icon>
+      <ion-title >Recuperar contraseña</ion-title>
       <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
     </ion-toolbar>
   </ion-header>
   
   
   <div class="d-flex-center">
+    
     <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()" >
       
+      <p class="ion-text-center">Se enviara un correo para que puedas seestrablacer tu contraseña</p>
+
       <app-custom-input 
         autocomplete="email" 
         icon="mail-outline" 

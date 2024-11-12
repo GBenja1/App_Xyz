@@ -32,7 +32,17 @@ export class ContraPage implements OnInit {
 
       this.firebaseSvc.sendRecoveryEmail(this.form.value.email).then(res => {
 
-        
+        this.utilsSvc.presentToast({
+          message: 'Correo enviado con exito',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          animated: true,
+          icon: 'mail-outline'
+        });
+
+        this.utilsSvc.routerLink('/login');
+        this.form.reset();
 
       }).catch(error => {
         console.log(error);
@@ -40,7 +50,7 @@ export class ContraPage implements OnInit {
         this.utilsSvc.presentToast({
           message: 'Error... contraseña o correo invalido.',
           duration: 2500,
-          color: 'primary',
+          color: 'danger',
           position: 'middle',
           animated: true,
           icon: 'alert-circle-outline'
