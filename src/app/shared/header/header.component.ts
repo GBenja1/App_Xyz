@@ -13,7 +13,7 @@ export class HeaderComponent  implements OnInit {
 
   isAdmin: boolean = false;
   isLoggedIn: boolean = false;
-  
+  isUser: boolean = false;
 
   @Input() title!: string;
 

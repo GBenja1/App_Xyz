@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class LoginPage implements OnInit {
 
+  
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),

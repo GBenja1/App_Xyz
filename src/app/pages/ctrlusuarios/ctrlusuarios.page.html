@@ -1,13 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ctrlusuarios</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+
+<ion-content>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">ctrlusuarios</ion-title>
+      <ion-title>Control de usuarios</ion-title>
+      <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
     </ion-toolbar>
   </ion-header>
+  <ion-spinner *ngIf="loading" slot="fixed"></ion-spinner>
+  <ion-list id="main-content" class="lista" style="padding-top: 30px;" *ngIf="!loading"> <!-- Cambiado a padding-top -->
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+      </ion-label>
+      <ion-button color="danger" (click)="deleteUser (user.id)">
+        Eliminar
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+

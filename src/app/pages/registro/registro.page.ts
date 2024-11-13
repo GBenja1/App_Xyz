@@ -35,7 +35,7 @@ export class RegistroPage implements OnInit {
         const userId = res.user.uid;
         
         // Actualización de perfil con nombre
-        await this.firebaseSvc.updateUser (this.form.value.name);
+        await this.firebaseSvc.updateUserProfile (this.form.value.name);
         
         // Guardar en Firestore, incluyendo el rol
         const userData = { ...this.form.value, id: userId }; // Incluye el rol automáticamente
