@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { roleGuard } from './guards/role.guard'; // Importa el guard
+
 
 const routes: Routes = [
 
@@ -24,6 +26,12 @@ const routes: Routes = [
     path: 'contra',
     loadChildren: () => import('./pages/contra/contra.module').then( m => m.ContraPageModule)
   },
+  {
+    path: 'ctrlusuarios',
+    loadChildren: () => import('./pages/ctrlusuarios/ctrlusuarios.module').then( m => m.CtrlusuariosPageModule),
+    canActivate: [roleGuard]
+  },
+
 
 ];
 

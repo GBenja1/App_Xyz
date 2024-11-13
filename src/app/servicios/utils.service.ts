@@ -24,11 +24,16 @@ export class UtilsService {
     return this.router.navigateByUrl(url);
   }
 
-  saveInLocalStorage(key: string, value: any){
-    return localStorage.setItem(key, JSON.stringify(value))
+  saveInLocalStorage(key: string, data: any) {
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
-  getFromLocalStorage(key: string){
-    return JSON.parse(localStorage.getItem(key))
+  async getFromLocalStorage(key: string) {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  }
+
+  removeFromLocalStorage(key: string) {
+    localStorage.removeItem(key);
   }
 }

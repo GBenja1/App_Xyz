@@ -1,18 +1,36 @@
 <ion-app>
-  <ion-menu contentId="main-content" >
+  <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ title }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-button [routerLink]="['/login']" expand="block" fill="clear" shape="round">
-        login
-      </ion-button>
-      <ion-button [routerLink]="['/registro']" expand="block" fill="clear" shape="round">
-        registro
-      </ion-button>
+      <!-- Si el usuario está logueado y es admin -->
+      <ng-container *ngIf="isLoggedIn && isAdmin; else guestContent">
+        <!-- Botón de usuarios, solo visible para administradores -->
+        <ion-button [routerLink]="['/ctrlusuarios']" expand="block" fill="clear" shape="round">
+          usuarios
+        </ion-button>
+    
+        <!-- Botón de cierre de sesión, visible solo si está logueado -->
+        <ion-button expand="block" fill="clear" shape="round" (click)="logout()">
+          Cerrar sesión
+          <ion-icon slot="end" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+    
+      <!-- Contenido para usuarios no logueados o sin rol de admin -->
+      <ng-template #guestContent>
+        <ion-button [routerLink]="['/login']" expand="block" fill="clear" shape="round">
+          login
+        </ion-button>
+        <ion-button [routerLink]="['/registro']" expand="block" fill="clear" shape="round">
+          registro
+        </ion-button>
+      </ng-template>
     </ion-content>
+    
   </ion-menu>
   <div class="ion-page" id="main-content">
     <ion-header>
@@ -26,4 +44,5 @@
     <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
   </div>
 </ion-app>
+
 

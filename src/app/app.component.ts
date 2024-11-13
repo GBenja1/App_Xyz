@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './servicios/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private authSvc: AuthService) {}
+
+  ngOnInit() {
+    this.authSvc.checkAuthStatus(); // Verificar el estado de autenticación al iniciar la aplicación
+  }
 }
