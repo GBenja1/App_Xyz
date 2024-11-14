@@ -12,7 +12,9 @@
         <ion-button [routerLink]="['/ctrlusuarios']" expand="block" fill="clear" shape="round">
           usuarios
         </ion-button>
-    
+        <ion-button [routerLink]="['/fotonasa']" expand="block" fill="clear" shape="round">
+          Imagenes
+        </ion-button>
         <!-- Botón de cierre de sesión, visible solo si está logueado -->
         <ion-button expand="block" fill="clear" shape="round" (click)="logout()">
           Cerrar sesión
@@ -28,10 +30,15 @@
         <ion-button [routerLink]="['/registro']" expand="block" fill="clear" shape="round">
           registro
         </ion-button>
-        <ion-button expand="block" fill="clear" shape="round" (click)="logout()" *ngIf="isLoggedIn">
-          Cerrar sesión
-          <ion-icon slot="end" name="log-out-outline"></ion-icon>
-        </ion-button>
+        <ng-container *ngIf="isLoggedIn">
+          <ion-button [routerLink]="['/fotonasa']" expand="block" fill="clear" shape="round">
+            Imagenes
+          </ion-button>
+          <ion-button expand="block" fill="clear" shape="round" (click)="logout()" *ngIf="isLoggedIn">
+            Cerrar sesión
+            <ion-icon slot="end" name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ng-container>
       </ng-template>
     </ion-content>
     

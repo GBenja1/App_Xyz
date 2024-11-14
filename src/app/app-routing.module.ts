@@ -32,6 +32,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ctrlusuarios/ctrlusuarios.module').then( m => m.CtrlusuariosPageModule),
     canActivate: [roleGuard]
   },
+  {
+    path: 'fotonasa',
+    loadChildren: () => import('./pages/fotonasa/fotonasa.module').then( m => m.FotonasaPageModule)
+  },
+  {
+    path: 'detallenasa/:date',
+    loadChildren: () => import('./pages/detallenasa/detallenasa.module').then( m => m.DetallenasaPageModule)
+  },
+
 
 
 ];

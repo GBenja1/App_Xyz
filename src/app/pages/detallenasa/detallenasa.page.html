@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon> Volver
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ image?.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="image">
+    <img [src]="image.url" *ngIf="image.media_type === 'image'" alt="{{ image.title }}" />
+    <video controls *ngIf="image.media_type === 'video'" [src]="image.url"></video>
+    <h2>{{ image.title }}</h2>
+    <p>{{ image.explanation }}</p>
+    <p><strong>Fecha:</strong> {{ image.date }}</p>
+  </div>
+</ion-content>
