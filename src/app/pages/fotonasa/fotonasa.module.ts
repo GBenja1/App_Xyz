@@ -9,6 +9,7 @@ import { FotonasaPageRoutingModule } from './fotonasa-routing.module';
 import { FotonasaPage } from './fotonasa.page';
 import { RouterLink } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core'; // Importar el módulo de traducción
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     IonicModule,
     FotonasaPageRoutingModule,
     RouterLink,
-    SharedModule
+    SharedModule,
+    TranslateModule // Asegúrate de importar esto
   ],
   declarations: [FotonasaPage]
 })

@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NasaService } from 'src/app/servicios/nasa.service';
+import { TranslateService } from '@ngx-translate/core'; // Importar TranslateService
 
 @Component({
   selector: 'app-fotonasa',
@@ -8,10 +9,15 @@ import { NasaService } from 'src/app/servicios/nasa.service';
   styleUrls: ['./fotonasa.page.scss'],
 })
 export class FotonasaPage implements OnInit {
-
   images: any[] = [];
 
-  constructor(private nasaService: NasaService, private router: Router) {}
+  constructor(
+    private nasaService: NasaService,
+    private router: Router,
+    private translate: TranslateService // Inyectar el servicio de traducción
+  ) {
+    this.translate.setDefaultLang('es'); // Idioma predeterminado: Español
+  }
 
   ngOnInit() {
     const endDate = new Date().toISOString().split('T')[0];
@@ -25,8 +31,10 @@ export class FotonasaPage implements OnInit {
   }
 
   openDetails(image: any) {
-    // Navega a la página de detalles y pasa la fecha como parámetro
     this.router.navigate(['/detallenasa', image.date]);
-    
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang); // Cambiar el idioma dinámicamente
   }
 }
