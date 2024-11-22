@@ -1,0 +1,45 @@
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <!-- Opciones visibles para usuarios logueados y admin -->
+        <ng-container *ngIf="isLoggedIn; else guestOptions">
+          <ion-col *ngIf="isAdmin">
+            <ion-button fill="outline" expand="block" size="small" [routerLink]="['/ctrlusuarios']">
+              <ion-icon name="people-outline"></ion-icon>
+              Usuarios
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="outline" expand="block" size="small" [routerLink]="['/fotonasa']">
+              <ion-icon name="images-outline"></ion-icon>
+              Fotos
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="outline" expand="block" size="small" (click)="logout()">
+              <ion-icon name="log-out-outline"></ion-icon>
+              Cerrar sesión
+            </ion-button>
+          </ion-col>
+        </ng-container>
+
+        <!-- Opciones visibles para invitados -->
+        <ng-template #guestOptions>
+          <ion-col>
+            <ion-button fill="outline" expand="block" size="small" [routerLink]="['/login']">
+              <ion-icon name="log-in-outline"></ion-icon>
+              Inicio sesión
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="outline" expand="block" size="small" [routerLink]="['/registro']">
+              <ion-icon name="person-add-outline"></ion-icon>
+              Registro
+            </ion-button>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

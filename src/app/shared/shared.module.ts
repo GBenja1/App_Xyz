@@ -6,18 +6,21 @@ import { HeaderComponent } from './header/header.component';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { FooterComponent } from './footer/footer.component';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    CustomInputComponent
+    CustomInputComponent,
+    FooterComponent
   ],
   exports: [
     HeaderComponent,
     CustomInputComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FooterComponent
   ],
   imports: [
     CommonModule,
