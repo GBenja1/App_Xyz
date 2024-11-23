@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'detallenasa/:date',
     loadChildren: () => import('./pages/detallenasa/detallenasa.module').then( m => m.DetallenasaPageModule)
+  },  {
+    path: 'planet-detail',
+    loadChildren: () => import('./pages/planet-detail/planet-detail.module').then( m => m.PlanetDetailPageModule)
   },
+
 
 
 

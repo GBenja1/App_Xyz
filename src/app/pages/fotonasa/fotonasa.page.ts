@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NasaService } from 'src/app/servicios/nasa.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ImageStorageService } from 'src/app/servicios/images-storage.service';  // Importa el servicio de almacenamiento
+import { DeepLTranslateService } from 'src/app/servicios/deepl-translate.service'; // Importar el servicio de traducción
 
 @Component({
   selector: 'app-fotonasa',
@@ -11,44 +10,39 @@ import { ImageStorageService } from 'src/app/servicios/images-storage.service'; 
 })
 export class FotonasaPage implements OnInit {
   images: any[] = [];
-  selectedDate: string = ''; // Para la fecha seleccionada
-  today: string = new Date().toISOString().split('T')[0]; // Fecha de hoy
-  isLoading: boolean = false; // Controla si está cargando imágenes
+  selectedDate: string = '';
+  today: string = new Date().toISOString().split('T')[0];
+  isLoading: boolean = false;
 
   constructor(
     private nasaService: NasaService,
     private router: Router,
-    private translate: TranslateService,
-    private imageStorageService: ImageStorageService  // Inyecta el servicio de almacenamiento
-  ) {
-    this.translate.setDefaultLang('es'); // Idioma predeterminado
-  }
+    private deeplTranslate: DeepLTranslateService  // Usamos DeepL para traducción
+  ) {}
 
   ngOnInit() {
-    // Verificar si las imágenes ya están almacenadas en localStorage
-    const storedImages = this.imageStorageService.getImages();
-    if (storedImages.length > 0) {
-      this.images = storedImages;
-      this.isLoading = false;
-    } else {
-      this.loadImages();
-    }
+    this.loadImages();  // Cargar imágenes al iniciar
   }
 
-  // Método para cargar imágenes desde la API
   loadImages() {
-    this.isLoading = true; // Mostrar spinner
+    this.isLoading = true;
     const endDate = new Date().toISOString().split('T')[0];
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 7);
     const startDateString = startDate.toISOString().split('T')[0];
 
     this.nasaService.getApodRange(startDateString, endDate).subscribe(
-      data => {
-        this.images = data;
+      async data => {
+        // Traducir el título y la descripción de cada imagen
+        const translatedData = await Promise.all(
+          data.map(async (image) => ({
+            ...image,
+            title: await this.deeplTranslate.translateText(image.title, 'es').toPromise(),
+            explanation: await this.deeplTranslate.translateText(image.explanation, 'es').toPromise(),
+          }))
+        );
+        this.images = translatedData;
         this.isLoading = false;
-        // Guardar las imágenes en localStorage
-        this.imageStorageService.saveImages(data);
       },
       error => {
         console.error('Error al cargar imágenes:', error);
@@ -57,21 +51,23 @@ export class FotonasaPage implements OnInit {
     );
   }
 
-  // Buscar imágenes por fecha seleccionada
   fetchImagesByDate() {
     if (!this.selectedDate) {
       alert('Por favor, selecciona una fecha');
       return;
     }
 
-    this.isLoading = true; // Mostrar spinner
+    this.isLoading = true;
     this.nasaService.getApodRange(this.selectedDate, this.selectedDate).subscribe(
-      data => {
-        if (data.length === 0) {
-          alert('No hay imágenes disponibles para esta fecha');
-        } else {
-          this.images = data;
-        }
+      async data => {
+        const translatedData = await Promise.all(
+          data.map(async (image) => ({
+            ...image,
+            title: await this.deeplTranslate.translateText(image.title, 'es').toPromise(),
+            explanation: await this.deeplTranslate.translateText(image.explanation, 'es').toPromise(),
+          }))
+        );
+        this.images = translatedData;
         this.isLoading = false;
       },
       error => {
@@ -80,27 +76,22 @@ export class FotonasaPage implements OnInit {
       }
     );
   }
+
+  // Funciones adicionales (onDateChange, clearSearch, etc.)
   onDateChange(event: any) {
-    this.selectedDate = event.detail.value.split('T')[0]; // Formato adecuado para la API
-    this.fetchImagesByDate(); // Llamar a la búsqueda con la nueva fecha
+    this.selectedDate = event.detail.value.split('T')[0];
+    this.fetchImagesByDate();
   }
-  // Limpiar la búsqueda y mostrar todas las imágenes
+
   clearSearch() {
-    this.selectedDate = ''; // Limpiar la fecha seleccionada
-    const endDate = new Date().toISOString().split('T')[0]; // Fecha actual
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 7);
-    const startDateString = startDate.toISOString().split('T')[0];
-
-    this.loadImages(); // Mostrar todas las imágenes desde la fecha actual hasta hace 7 días
+    this.selectedDate = '';
+    this.loadImages(); 
   }
 
-  // Cambiar el idioma de la aplicación
   changeLanguage(lang: string) {
-    this.translate.use(lang);
+    // Funcionalidad de cambio de idioma
   }
 
-  // Navegar a los detalles de una imagen
   openDetails(image: any) {
     this.router.navigate(['/detallenasa', image.date]);
   }

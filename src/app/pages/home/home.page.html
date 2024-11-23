@@ -1,6 +1,44 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Explora el Universo</ion-title>
+    </ion-toolbar>
+</ion-header>
 
+<ion-content>
+    <!-- Introducción a la app -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Bienvenido a SpaceExplorer</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            SpaceExplorer es una aplicación educativa diseñada para inspirar curiosidad sobre nuestro sistema solar y el
+            univeso
+            Aprende sobre los planetas, visualiza imágenes astronómicas de la NASA y descubre datos fascinantes sobre el
+            espacio.
+        </ion-card-content>
+    </ion-card>
 
-<ion-content [fullscreen]="true">
-  
-  
+    <!-- Texto adicional sobre la enseñanza -->
+    <ion-card>
+        <ion-card-content>
+            ¿Sabías que el planeta más caliente del sistema solar no es el más cercano al Sol? Explora estos y muchos
+            más datos
+            interesantes. Nuestra misión es acercarte al cosmos de una manera interactiva y educativa.
+        </ion-card-content>
+    </ion-card>
+
+    <!-- Planetas -->
+    <ion-grid class="home">
+        <ion-row>
+            <ion-col size="6" size-md="4" size-lg="3" *ngFor="let planet of planets">
+                <ion-card (click)="showDetails(planet)" class="custom-card">
+                    <img [src]="planet.image" alt="{{ planet.name }}" class="planet-image" />
+                    <ion-card-content>
+                        <h3>{{ planet.name }}</h3>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 </ion-content>

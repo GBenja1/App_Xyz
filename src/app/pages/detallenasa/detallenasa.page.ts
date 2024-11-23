@@ -1,7 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NasaService } from 'src/app/servicios/nasa.service';
-import { Location } from '@angular/common';
+import { DeepLTranslateService } from 'src/app/servicios/deepl-translate.service'; // Importa el servicio de DeepL
 
 @Component({
   selector: 'app-detallenasa',
@@ -9,22 +10,29 @@ import { Location } from '@angular/common';
   styleUrls: ['./detallenasa.page.scss'],
 })
 export class DetallenasaPage implements OnInit {
-
   image: any;
 
   constructor(
     private route: ActivatedRoute,
     private nasaService: NasaService,
-    private location: Location 
+    private deeplTranslate: DeepLTranslateService,  // Inyecta el servicio de DeepL
+    private location: Location
   ) {}
 
   ngOnInit() {
     const date = this.route.snapshot.paramMap.get('date');
-    if (date) {
-      this.nasaService.getApodRange(date, date).subscribe(data => {
-        this.image = data[0];
-      });
-    }
+    this.nasaService.getApodRange(date, date).subscribe(async data => {
+      const image = data[0];
+      this.image = {
+        ...image,
+        title: await this.deeplTranslate.translateText(image.title, 'es').toPromise(),
+        explanation: await this.deeplTranslate.translateText(image.explanation, 'es').toPromise()
+      };
+    });
+  }
+
+  changeLanguage(lang: string) {
+    // Cambiar el idioma de la aplicación
   }
 
   goBack() {

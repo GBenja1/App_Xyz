@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ planet?.name }}</ion-title>
+    <ion-icon name="home" slot="end" [routerLink]="['/home']" style="padding-right: 20px;"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <!-- Mostrar imagen del planeta -->
+    <img [src]="planet?.image" alt="{{ planet?.name }}" class="planet-image-detail" />
+    <h2>{{ planet?.name }}</h2>
+    <p><strong>Tamaño:</strong> {{ planet?.size }}</p>
+    <p><strong>Distancia al Sol:</strong> {{ planet?.distance }}</p>
+  </div>
+</ion-content>
+

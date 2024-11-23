@@ -1,0 +1,54 @@
+/* Fondo oscuro que recuerda el espacio */
+ion-content {
+  background: linear-gradient(to bottom, #1b1b2f, #151522);
+  color: #ffffff; /* Texto blanco para resaltar */
+}
+
+/* Estilo para los títulos */
+ion-card-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2); /* Sombra suave */
+}
+
+/* Estilo para las tarjetas */
+ion-card {
+  background: rgba(0, 0, 0, 0.7); /* Fondo oscuro transparente */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 250px; /* Altura fija para los cards */
+  overflow: hidden;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+ion-card:hover {
+  transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.9); /* Cambiar fondo al hover */
+}
+
+/* Tamaño uniforme para las imágenes */
+.planet-image {
+  width: 100%;
+   /* Ajustar para que ocupe una parte del card */
+  object-fit: cover; /* Evitar distorsión de imágenes */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Estilo para el contenido de las tarjetas */
+ion-card-content {
+  color: #e0e0e0;
+  font-size: 1rem;
+  text-align: center;
+  
+  flex: 1; /* Para ocupar el espacio restante */
+}
+
+/* Margen inferior para que los elementos no queden cortados */
+.home {
+  padding-bottom: 70px;
+}
