@@ -1,2 +1,5 @@
 .angular/
-.node_module/
+/node_module
+.firebase/
+/android
+/www
