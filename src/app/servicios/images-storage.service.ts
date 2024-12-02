@@ -9,13 +9,13 @@ export class ImageStorageService {
 
   // Guardar las imágenes en localStorage
   saveImages(images: any[]): void {
-    localStorage.setItem('nasaImages', JSON.stringify(images));  // Guardamos como cadena JSON
+    localStorage.setItem('nasaImages', JSON.stringify(images)); 
   }
 
   // Obtener las imágenes de localStorage
   getImages(): any[] {
     const storedImages = localStorage.getItem('nasaImages');
-    return storedImages ? JSON.parse(storedImages) : [];  // Devuelve el arreglo de imágenes
+    return storedImages ? JSON.parse(storedImages) : [];  
   }
 
   // Limpiar las imágenes de localStorage

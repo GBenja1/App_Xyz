@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NasaService } from 'src/app/servicios/nasa.service';
 import { DeepLTranslateService } from 'src/app/servicios/deepl-translate.service'; // Importar el servicio de traducción
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-fotonasa',
   templateUrl: './fotonasa.page.html',
@@ -17,7 +17,8 @@ export class FotonasaPage implements OnInit {
   constructor(
     private nasaService: NasaService,
     private router: Router,
-    private deeplTranslate: DeepLTranslateService  // Usamos DeepL para traducción
+    private deeplTranslate: DeepLTranslateService,  // Usamos DeepL para traducción
+    private sanitizer: DomSanitizer // Inyectar el servicio
   ) {}
 
   ngOnInit() {
@@ -30,15 +31,18 @@ export class FotonasaPage implements OnInit {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 7);
     const startDateString = startDate.toISOString().split('T')[0];
-
+  
     this.nasaService.getApodRange(startDateString, endDate).subscribe(
       async data => {
-        // Traducir el título y la descripción de cada imagen
+        // Traducir el título y la descripción, y manejar videos
         const translatedData = await Promise.all(
-          data.map(async (image) => ({
-            ...image,
-            title: await this.deeplTranslate.translateText(image.title, 'es').toPromise(),
-            explanation: await this.deeplTranslate.translateText(image.explanation, 'es').toPromise(),
+          data.map(async (item) => ({
+            ...item,
+            title: await this.deeplTranslate.translateText(item.title, 'es').toPromise(),
+            explanation: await this.deeplTranslate.translateText(item.explanation, 'es').toPromise(),
+            url: item.media_type === 'video' 
+              ? this.sanitizer.bypassSecurityTrustResourceUrl(item.url) 
+              : item.url // Sanitizar videos y dejar imágenes sin cambios
           }))
         );
         this.images = translatedData;

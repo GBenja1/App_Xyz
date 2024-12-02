@@ -10,14 +10,27 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div *ngIf="image">
-    <img [src]="image.url" *ngIf="image.media_type === 'image'" alt="{{ image.title }}" />
-    <video controls *ngIf="image.media_type === 'video'" [src]="image.url"></video>
-    <h2>{{ image.title }}</h2>
-    <p>{{ image.explanation }}</p>
-    <p><strong>Fecha:</strong> {{ image.date }}</p>
+  <!-- Mostrar imagen o video -->
+  <div class="fdiv">
+    <div *ngIf="image?.media_type === 'image'; else videoContent">
+      <img [src]="image?.url" alt="{{ image?.title }}" style="width: 100%; border-radius: 10px;" />
+    </div>
+    <ng-template #videoContent>
+      <iframe 
+        *ngIf="image?.media_type === 'video'" 
+        [src]="image?.sanitizedUrl" 
+        width="100%" 
+        height="300" 
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </ng-template>
+    <div style="margin-top: 20px;">
+      <p>{{ image?.explanation }}</p>
+      <p><strong>Fecha:</strong> {{ image?.date | date: 'dd/MM/yyyy' }}</p>
+    </div>
   </div>
+
+  <!-- Mostrar descripción -->
+  
 </ion-content>
-
-
-
